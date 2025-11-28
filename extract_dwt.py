@@ -30,5 +30,11 @@ def extract_watermark_dwt(watermarked_path, watermark_length, alpha=0.05):
             break
         bits += '1' if flat_LH[i] > 0 else '0'
 
-    return bits_to_text(bits)
+    extracted = bits_to_text(bits)
+
+    if extracted.startswith("WM:"):
+        return extracted[3:]   # return actual message
+    else:
+        return None            # means no valid watermark
+
 
