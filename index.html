@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DWT Watermark Tool</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(18px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+    
+
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-white">
+
+  <main class="flex justify-center items-center min-h-screen px-4">
+    <div class="glass p-10 max-w-xl w-full">
+
+      <h1 class="text-3xl font-semibold mb-3 text-center">
+        DWT Image Watermarking
+      </h1>
+      <p class="text-slate-400 mb-8 text-center">
+        Upload an image and embed a hidden watermark using DWT.
+      </p>
+
+      <!-- Upload -->
+      <label class="block text-sm mb-2">Upload Image</label>
+      <input id="imageInput" type="file" accept="image/*"
+             class="w-full p-3 rounded-xl bg-white/5 border border-white/10 mb-6">
+
+      <!-- Watermark text -->
+      <label class="block text-sm mb-2">Watermark Text</label>
+      <input id="wmText" type="text"
+             placeholder="Enter hidden watermark text..."
+             class="w-full p-3 rounded-xl bg-white/5 border border-white/10 mb-6">
+
+      <!-- Strength -->
+      <label class="block text-sm mb-2">Watermark Strength </label>
+      <input id="alpha" type="range" min="1" max="10" value="5"
+             class="w-full mb-6">
+
+      <!-- Apply Button -->
+      <button id="applyBtn"
+              class="w-full py-3 bg-indigo-600/80 rounded-xl hover:bg-indigo-600
+                     shadow-[0_0_20px_rgba(99,102,241,0.5)] mb-6 transition">
+        Apply Watermark (DWT)
+      </button>
+
+      <!-- Output -->
+      <div id="resultSection" class="hidden">
+        <h2 class="text-xl font-semibold mb-3">Watermarked Image</h2>
+        <img id="outputImage" class="rounded-xl mb-4" />
+
+        <a id="downloadBtn"
+           class="block text-center py-3 bg-green-600/80 rounded-xl hover:bg-green-600 transition"
+           download="watermarked.png">
+          Download Image
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>
