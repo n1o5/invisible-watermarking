@@ -6,8 +6,14 @@
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+      body {
+    font-family: 'Poppins', sans-serif;
+  }
+
+
     .glass {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(18px) saturate(180%);
@@ -15,15 +21,29 @@
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     }
-    
 
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+
+    .shake {
+      animation: shake 0.3s ease-in-out;
+    }
   </style>
+
 </head>
 
 <body class="min-h-screen bg-slate-950 text-white">
 
-  <main class="flex justify-center items-center min-h-screen px-4">
-    <div class="glass p-10 max-w-xl w-full">
+  <!-- OUTER FLEX CONTAINER -->
+  <main class="min-h-screen px-4 flex justify-center items-center gap-10">
+
+    <!-- LEFT PANEL — EMBEDDING -->
+    <div id="embedCard" class="glass p-10 w-[400px]">
 
       <h1 class="text-3xl font-semibold mb-3 text-center">
         DWT Image Watermarking
@@ -33,20 +53,27 @@
       </p>
 
       <!-- Upload -->
-      <label class="block text-sm mb-2">Upload Image</label>
-      <input id="imageInput" type="file" accept="image/*"
-             class="w-full p-3 rounded-xl bg-white/5 border border-white/10 mb-6">
+      <label for="imageInput"
+       class="cursor-pointer w-full block text-center py-3 rounded-xl
+              bg-indigo-500/30 border border-indigo-300/40 text-white
+              hover:bg-indigo-500/50 transition shadow-lg mb-6">
+        Choose Image
+      </label>
+      <input id="imageInput" type="file" accept="image/*" class="hidden">
 
       <!-- Watermark text -->
       <label class="block text-sm mb-2">Watermark Text</label>
       <input id="wmText" type="text"
-             placeholder="Enter hidden watermark text..."
+             placeholder="Enter watermark text"
              class="w-full p-3 rounded-xl bg-white/5 border border-white/10 mb-6">
 
       <!-- Strength -->
       <label class="block text-sm mb-2">Watermark Strength </label>
       <input id="alpha" type="range" min="1" max="10" value="5"
              class="w-full mb-6">
+
+      <!-- Error message -->
+      <p id="embedError" class="text-red-400 text-sm font-medium mb-4 hidden"></p>
 
       <!-- Apply Button -->
       <button id="applyBtn"
@@ -68,6 +95,54 @@
       </div>
 
     </div>
+
+    <!-- RIGHT PANEL — AUTHENTICATION -->
+    <div id="authCard" class="glass p-10 w-[400px] flex flex-col justify-between">
+
+      <div>
+        <h2 class="text-3xl font-semibold mb-6 text-center">Authenticate Watermark</h2>
+        <p class="text-slate-400 mb-8 text-center">
+          Upload an image and extract a hidden watermark using DWT.
+        </p>
+
+        <!-- DWT INFORMATION BLOCK -->
+        <div id="authInfo" class="text-slate-400 text-sm leading-relaxed mb-6">
+          <p class="mb-2">
+            <strong>How DWT Watermarking Works:</strong>
+            The image is decomposed into low and high frequency bands using the
+            Discrete Wavelet Transform. The watermark is embedded in the low-high sub band,
+            making it invisible to the human eye while remaining resistant to noise.
+          </p>
+
+        </div>
+
+        <!-- Upload for authentication -->
+        <label for="authImage"
+         class="cursor-pointer w-full block text-center py-3 rounded-xl
+                bg-indigo-500/30 border border-indigo-300/40 text-white
+                hover:bg-indigo-500/50 transition shadow-lg mb-6">
+          Choose Watermarked Image
+        </label>
+
+        <input id="authImage" type="file" accept="image/*" class="hidden">
+
+      </div>
+
+      <!-- Error -->
+      <p id="authError" class="text-red-400 text-sm font-medium mb-4 hidden"></p>
+
+      <div>
+        <button id="authBtn"
+                class="w-full py-3 bg-indigo-600/80 rounded-xl hover:bg-indigo-600
+                       shadow-[0_0_20px_rgba(99,102,241,0.5)] mb-6 transition">
+          Authenticate Watermark
+        </button>
+
+        <p id="authResult" class="text-center text-lg font-semibold"></p>
+      </div>
+
+    </div>
+
   </main>
 
 <script src="/static/script.js"></script>
