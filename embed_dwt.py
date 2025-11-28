@@ -21,6 +21,7 @@ def embed_watermark_dwt(image_path, watermark_text, output_path, alpha=0.05):
     y_channel = np.float32(ycrcb[:, :, 0]) / 255.0
 
     # Convert watermark to bits
+    watermark_text = "WM:" + watermark_text
     bits = text_to_bits(watermark_text)
 
     # DWT decomposition
