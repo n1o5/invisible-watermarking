@@ -26,6 +26,21 @@ def watermark():
         encoded = base64.b64encode(f.read()).decode("utf-8")
 
     return jsonify({"image": encoded})
+from extract_dwt import extract_watermark_dwt
+
+@app.route("/authenticate", methods=["POST"])
+def authenticate():
+    file = request.files["image"]
+    input_path = "temp_auth.png"
+    file.save(input_path)
+
+    # Try extracting with reasonable max length
+    extracted = extract_watermark_dwt(input_path, watermark_length=20)
+
+    if extracted:
+        return jsonify({"status": "valid", "message": extracted})
+    else:
+        return jsonify({"status": "invalid"})
 
 
 if __name__ == "__main__":
